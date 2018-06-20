@@ -1,6 +1,6 @@
-#ifndef _EXAMPLE_H_
-#define _EXAMPLE_H_
+#ifndef EXAMPLE_H_
+#define EXAMPLE_H_
 
-typedef int inteiro
+int teste(void);
 
 #endif
