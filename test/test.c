@@ -26,5 +26,6 @@ int main(int argc, char* argv[])
 		printf("\n");
 	}
 
+	free_grafo(teste);
 	return 0;
 }
