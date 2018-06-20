@@ -1,9 +1,16 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include "arquivo.h"
 
-
-int main(void)
+int main(int argc, char* argv[])
 {
-	printf("Olá! Eu sou a teste!\n");
+	if (argc < 2)
+	{
+		printf("Uso: %s arquivo_grafo.csv\n", argv[0]);
+		return(1);
+	}
+
+	abre_csv(argv[1]);
+
 	return 0;
 }

@@ -39,4 +39,5 @@ lib/*
 bin/*
 
 #ignore development files
-development* .vs
+development*
+.vs
