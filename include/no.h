@@ -11,6 +11,6 @@ typedef struct no
 	int cor;
 }no;
 
-int is_number_related(no* node, int number);
+int is_number_related(grafo* rede, int indice, int number);
 
 #endif // !NO_H_
