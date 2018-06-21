@@ -1,10 +1,10 @@
 #include "no.h"
 
-int is_number_related(no* node, int number){
+int is_number_related(grafo* rede, int indice, int number){
 	int i;
 	
-	for(i = 0; i < node->tam_vetor_vizinhos; i++){
-		if(node->nos_vizinhos[i] == number){
+	for(i = 0; i < rede->nos_grafo[indice].tam_vetor_vizinhos; i++){
+		if(rede->nos_grafo[indice].nos_vizinhos[i] == number){
 			return 1;
 		}
 	}
