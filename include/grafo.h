@@ -13,6 +13,7 @@ typedef struct grafo
 //destroi o grafo
 void free_grafo(grafo* grafico);
 
+//tirar
 int get_indice_no_numero(grafo* rede, int valor);
 
 #endif // ! GRAFO_H_
