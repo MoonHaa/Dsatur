@@ -1,7 +1,12 @@
 #ifndef DSATUR_H_
 #define DSATUR_H_
 
-int DSATUR(grafo* rede);
+#include "no.h"
+#include "grafo.h"
+
+#include <stdlib.h>
+
+int dsatur(grafo* rede);
 void colorir(grafo* rede, int indice, int* maior_cor);
 void inicializar_grafo(grafo* rede);
 int indice_proximo_colorir(grafo* rede);

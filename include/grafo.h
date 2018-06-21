@@ -1,4 +1,4 @@
-#ifndef  GRAFO_H_
+#ifndef GRAFO_H_
 #define GRAFO_H_
 
 #include "no.h"
@@ -13,7 +13,7 @@ typedef struct grafo
 //destroi o grafo
 void free_grafo(grafo* grafico);
 
-//é aqui seu animal!!!!!
+//eh aqui seu animal!!!!!
 int is_number_related(grafo* rede, int indice, int number);
 
 #endif // ! GRAFO_H_
