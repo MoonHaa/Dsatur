@@ -1,4 +1,6 @@
 #include <stdlib.h>
+//
+#include <stdio.h>
 
 #include "dsatur.h"
 #include "no.h"
@@ -25,32 +27,52 @@ void colorir(grafo* rede, int indice, int* maior_cor){
 	
 	cor_escolhida = 0;
 	
+	//vetor que armazena quantos vizinhos foram encontrados de cada cor
 	quantos_relacionados_de_cada_cor = (int*)malloc((*maior_cor)*sizeof(int));
 	
-	for(i=0; i<*maior_cor; i++){
+	for(i=0; i<(*maior_cor); i++){
 		quantos_relacionados_de_cada_cor[i] = 0;
 	}
 	
+	//varre todos o nós do grafo
 	for(i=0; i < rede->tamanho_grafo; i++){
-		if(rede->nos_grafo[i].cor != 0){
+		
+		//se o nó esta colorido
+		if(rede->nos_grafo[i].cor > 0){
+		
+			//se ele esta relacionado com o nó a colorir
 			if(is_number_related(rede, indice, rede->nos_grafo[i].valor_no)){
+				//aumenta o numero da cor dele no vetor de contagem
 				quantos_relacionados_de_cada_cor[rede->nos_grafo[i].cor-1]++;
 			}
 		}
 	}
 	
-	for(i=0; i<*maior_cor; i++){
+	//se alguma cor nao tem correspondencias 
+	//(algo errado com esta parte do codigo)
+	for(i=0; i<(*maior_cor); i++){
 		if(quantos_relacionados_de_cada_cor[i]==0){
 			cor_escolhida = i+1;
 			
 			break;
 		}
 	}
+	//necessario para os testes
+	int size = (*maior_cor);
+	
+	//se nao foi selecionada nenhuma cor cria-se uma nova cor
 	if(cor_escolhida == 0){
-		cor_escolhida = ++(*maior_cor);
+		(*maior_cor)++;
+		cor_escolhida = (*maior_cor);
 	}
 	
 	rede->nos_grafo[indice].cor = cor_escolhida;
+	
+	//teste
+	printf("indice: %d \ncor escolhida: %d\n\n",indice, cor_escolhida);
+	for(i=0; i<size; i++){
+		printf("cor: %d nmro: %d \n", i+1, quantos_relacionados_de_cada_cor[i]);
+	}
 	
 }
 
