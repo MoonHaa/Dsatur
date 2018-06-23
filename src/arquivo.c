@@ -1,9 +1,10 @@
 #include "arquivo.h"
 
-grafo * abre_csv(char * arquivo){
+grafo * abre_csv(char * arquivo)
+{
 	//tenta abrir o arquivo
 	FILE* file = fopen(arquivo, "r");
-	
+
 	//caso falhe, retorna NULL
 	if (file == NULL)
 		return NULL;
@@ -23,17 +24,17 @@ grafo * abre_csv(char * arquivo){
 
 	//cria base do grafo
 	grafo* grafico = (grafo*)malloc(sizeof(grafo));
-	
+
 	//seta tamanho de nos no grafo (cada no eh o inicio de uma linha)
 	grafico->tamanho_grafo = numero_linhas - 1;
-	
+
 	//cria o vetor de nos do grafo
 	grafico->nos_grafo = (no*)malloc(grafico->tamanho_grafo * sizeof(no));
 
-	//contador pra criação do grafo em ordem
+	//contador pra criacao do grafo em ordem
 	int i;
-	
-	//le as i linhas novamente, contabilizando o valor do nos, e as suas relações!!!
+
+	//le as i linhas novamente, contabilizando o valor do nos, e as suas relacoes!!!
 	for(i = 0; i <(numero_linhas-1); i++)
 	{
 		//le a linha
@@ -46,7 +47,7 @@ grafo * abre_csv(char * arquivo){
 
 		//conta numero de digitos numericos da linha
 		int num_digitos = 0;
-		
+
 		//percorre a string, contando a quantidade de nos
 		int p, tamanho_linha = strlen(linha);
 		for (p = 0; p < tamanho_linha; p++)
@@ -62,12 +63,12 @@ grafo * abre_csv(char * arquivo){
 				}
 			}
 		}
-		
+
 		//seta o numero de adjacencias
 		grafico->nos_grafo[i].num_vizinhos = num_digitos - 1;
 		//seta o numero de adjacencias originais
 		grafico->nos_grafo[i].tam_vetor_vizinhos = num_digitos - 1;
-		
+
 		//cria o vetor de adjacencias
 		grafico->nos_grafo[i].nos_vizinhos = (int*)malloc(grafico->nos_grafo[i].tam_vetor_vizinhos * sizeof(int));
 
@@ -94,27 +95,10 @@ grafo * abre_csv(char * arquivo){
 				pos++;
 		}
 	}
-	
+
 	//fecha o arquivo
 	fclose(file);
-	
+
 	//retorna o grafo criado
 	return grafico;
-}
-
-void imprime_grafo(grafo* rede){
-	int i,p;
-
-	printf("No | Num_Viz | Grau | Cor |# Vizinhos...|\n");
-
-	
-	for (i = 0; i < rede->tamanho_grafo; i++)
-	{
-		printf("%i | %i | %i | %i |", rede->nos_grafo[i].valor_no, rede->nos_grafo[i].num_vizinhos, rede->nos_grafo[i].grau_dsatur, rede->nos_grafo[i].cor);
-		for (p = 0; p < rede->nos_grafo[i].tam_vetor_vizinhos; p++)
-		{
-			printf("# %i ", rede->nos_grafo[i].nos_vizinhos[p]);
-		}
-		printf("\n");
-	}	
 }

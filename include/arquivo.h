@@ -11,6 +11,5 @@
 
 //le o arquivo e cria o grafo!!!
 grafo* abre_csv(char* arquivo);
-void imprime_grafo(grafo* rede);
 
 #endif // !ARQUIVO_H_

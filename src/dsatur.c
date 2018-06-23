@@ -1,145 +1,133 @@
-#include <stdlib.h>
-//
-#include <stdio.h>
-
 #include "dsatur.h"
-#include "no.h"
-#include "grafo.h"
 
-int DSATUR(grafo* rede){
+int dsatur(grafo* rede)
+{
 	int maior_cor = 0;
 	int indice;
-	
+
 	inicializar_grafo(rede);
-	
-	while(!is_todos_coloridos(rede)){
+
+	while(!is_todos_coloridos(rede))
+	{
 		indice = indice_proximo_colorir(rede);
 		colorir(rede, indice, &maior_cor);
 		atualizar_dsatur_e_vizinhos(rede, indice);
 	}
+	//free na main
 	return maior_cor;
 }
 
-void colorir(grafo* rede, int indice, int* maior_cor){
-	int i 
-	, cor_escolhida
-	, *quantos_relacionados_de_cada_cor;
-	
-	cor_escolhida = 0;
-	
-	//vetor que armazena quantos vizinhos foram encontrados de cada cor
-	quantos_relacionados_de_cada_cor = (int*)malloc((*maior_cor)*sizeof(int));
-	
-	for(i=0; i<(*maior_cor); i++){
+void colorir(grafo* rede, int indice, int* maior_cor)
+{
+	int i, cor_escolhida = 0;
+	int *quantos_relacionados_de_cada_cor = (int*)malloc((*maior_cor)*sizeof(int));
+
+	for(i=0; i<*maior_cor; i++)
+	{
 		quantos_relacionados_de_cada_cor[i] = 0;
 	}
-	
-	//varre todos o nós do grafo
-	for(i=0; i < rede->tamanho_grafo; i++){
-		
-		//se o nó esta colorido
-		if(rede->nos_grafo[i].cor > 0){
-		
-			//se ele esta relacionado com o nó a colorir
-			if(is_number_related(rede, indice, rede->nos_grafo[i].valor_no)){
-				//aumenta o numero da cor dele no vetor de contagem
+
+	for (i = 0; i < rede->tamanho_grafo; i++)
+	{
+		if(rede->nos_grafo[i].cor != 0)
+		{
+			if(is_number_related(rede, indice, rede->nos_grafo[i].valor_no))
+			{
 				quantos_relacionados_de_cada_cor[rede->nos_grafo[i].cor-1]++;
 			}
 		}
 	}
-	
-	//se alguma cor nao tem correspondencias 
-	//(algo errado com esta parte do codigo)
-	for(i=0; i<(*maior_cor); i++){
-		if(quantos_relacionados_de_cada_cor[i]==0){
+
+	for(i=0; i<*maior_cor; i++)
+	{
+		if(quantos_relacionados_de_cada_cor[i]==0)
+		{
 			cor_escolhida = i+1;
-			
 			break;
 		}
 	}
-	//necessario para os testes
-	int size = (*maior_cor);
-	
-	//se nao foi selecionada nenhuma cor cria-se uma nova cor
-	if(cor_escolhida == 0){
-		(*maior_cor)++;
-		cor_escolhida = (*maior_cor);
+
+	if(cor_escolhida == 0)
+	{
+		cor_escolhida = ++(*maior_cor);
 	}
-	
+
 	rede->nos_grafo[indice].cor = cor_escolhida;
-	
-	//teste
-	printf("indice: %d \ncor escolhida: %d\n\n",indice, cor_escolhida);
-	for(i=0; i<size; i++){
-		printf("cor: %d nmro: %d \n", i+1, quantos_relacionados_de_cada_cor[i]);
-	}
-	
+
 }
 
-void inicializar_grafo(grafo* rede){
+void inicializar_grafo(grafo* rede)
+{
 	int i;
-	
-	for(i=0; i<rede->tamanho_grafo; i++){
+
+	for(i=0; i<rede->tamanho_grafo; i++)
+	{
 		rede->nos_grafo[i].num_vizinhos = rede->nos_grafo[i].tam_vetor_vizinhos;
 		rede->nos_grafo[i].grau_dsatur = 0;
 		rede->nos_grafo[i].cor = 0;
 	}
 }
 
-int indice_proximo_colorir(grafo* rede){
-	int i
-	, maior_dsatur
-	, indice_escolhido
-	, is_empate_dsatur
-	, maior_n_vizinhos;
-	
-	indice_escolhido = 0;
-	maior_dsatur = 0;
-	is_empate_dsatur = 0;
-	maior_n_vizinhos = 0;
-	
-	//procura o maior grau de saturação (e o dono) dos que nao 
+int indice_proximo_colorir(grafo* rede)
+{
+	int i, indice_escolhido = 0, maior_dsatur = 0, is_empate_dsatur = 0, maior_n_vizinhos = 0;
+
+	//procura o maior grau de saturaÃ§Ã£o (e o dono) dos que nao
 	//foram coloridos e verifica se houve um empate
-	for(i=0; i<rede->tamanho_grafo; i++){		
-		if(rede->nos_grafo[i].cor == 0){
-			if(rede->nos_grafo[i].grau_dsatur == maior_dsatur){
+	for(i=0; i<rede->tamanho_grafo; i++)
+	{
+		if(rede->nos_grafo[i].cor == 0)
+		{
+			if(rede->nos_grafo[i].grau_dsatur == maior_dsatur)
+			{
 				is_empate_dsatur = 1;
 			}
-			if(rede->nos_grafo[i].grau_dsatur > maior_dsatur){
+			if(rede->nos_grafo[i].grau_dsatur > maior_dsatur)
+			{
 				maior_dsatur = rede->nos_grafo[i].grau_dsatur;
 				indice_escolhido = i;
 				is_empate_dsatur = 0;
 			}
 		}
 	}
-	if(is_empate_dsatur){	
-		for(i=0; i<rede->tamanho_grafo; i++){
-			if(rede->nos_grafo[i].cor == 0 
-			&&rede->nos_grafo[i].num_vizinhos>maior_n_vizinhos){
+
+	if(is_empate_dsatur)
+	{
+		for(i=0; i<rede->tamanho_grafo; i++)
+		{
+			if( (rede->nos_grafo[i].cor == 0) && (rede->nos_grafo[i].num_vizinhos > maior_n_vizinhos) )
+			{
 				indice_escolhido = i;
 			}
-			
 		}
 	}
+
 	return indice_escolhido;
 }
 
-int is_todos_coloridos(grafo* rede){
+int is_todos_coloridos(grafo* rede)
+{
 	int i;
-	
-	for(i=0; i<rede->tamanho_grafo; i++){
-		if(rede->nos_grafo[i].cor == 0){
+
+	for(i=0; i<rede->tamanho_grafo; i++)
+	{
+		if(rede->nos_grafo[i].cor == 0)
+		{
 			return 0;
 		}
 	}
+
 	return 1;
 }
 
-void atualizar_dsatur_e_vizinhos(grafo* rede, int indice){
+void atualizar_dsatur_e_vizinhos(grafo* rede, int indice)
+{
 	int i;
-	
-	for(i=0; i<rede->tamanho_grafo; i++){
-		if(is_number_related(rede, indice, rede->nos_grafo[i].valor_no)){
+
+	for(i=0; i<rede->tamanho_grafo; i++)
+	{
+		if(is_number_related(rede, indice, rede->nos_grafo[i].valor_no))
+		{
 			rede->nos_grafo[i].num_vizinhos--;
 			rede->nos_grafo[i].grau_dsatur++;
 		}

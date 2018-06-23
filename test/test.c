@@ -18,10 +18,10 @@ int main(int argc, char* argv[])
 
 	for (i = 0; i < teste->tamanho_grafo; i++)
 	{
-		printf("%i | %i | %i | %i |", teste->nos_grafo[i].valor_no, teste->nos_grafo[i].num_vizinhos, teste->nos_grafo[i].grau_dsatur, teste->nos_grafo[i].cor);
+		printf("%2i | %7i | %4i | %3i |", teste->nos_grafo[i].valor_no, teste->nos_grafo[i].num_vizinhos, teste->nos_grafo[i].grau_dsatur, teste->nos_grafo[i].cor);
 		for (p = 0; p < teste->nos_grafo[i].tam_vetor_vizinhos; p++)
 		{
-			printf(" %i |", teste->nos_grafo[i].nos_vizinhos[p]);
+			printf(" %2i |", teste->nos_grafo[i].nos_vizinhos[p]);
 		}
 		printf("\n");
 	}

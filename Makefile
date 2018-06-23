@@ -20,7 +20,7 @@ all: dsatur
 #compila o programa
 dsatur: $(OBJECTS) $(BUILDDIR)/main.o
 	@mkdir -p $(BINDIR)
-	@echo " Linkando Snake..."
+	@echo " Linkando Dsatur..."
 	@echo " $(CC) $^ -o $(BINDIR)/dsatur $(LIB)"; $(CC) $^ -o $(BINDIR)/dsatur $(LIB)
 
 #compila o arquivo main.c
