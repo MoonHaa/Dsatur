@@ -1,7 +1,7 @@
 #ifndef NO_H_
 #define NO_H_
 
-typedef struct no 
+typedef struct _no 
 {
 	int valor_no;
 	int* nos_vizinhos;

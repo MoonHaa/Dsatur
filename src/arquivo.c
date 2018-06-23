@@ -1,7 +1,6 @@
 #include "arquivo.h"
 
-grafo * abre_csv(char * arquivo)
-{
+grafo * abre_csv(char * arquivo){
 	//tenta abrir o arquivo
 	FILE* file = fopen(arquivo, "r");
 	
@@ -101,4 +100,21 @@ grafo * abre_csv(char * arquivo)
 	
 	//retorna o grafo criado
 	return grafico;
+}
+
+void imprime_grafo(grafo* rede){
+	int i,p;
+
+	printf("No | Num_Viz | Grau | Cor |# Vizinhos...|\n");
+
+	
+	for (i = 0; i < rede->tamanho_grafo; i++)
+	{
+		printf("%i | %i | %i | %i |", rede->nos_grafo[i].valor_no, rede->nos_grafo[i].num_vizinhos, rede->nos_grafo[i].grau_dsatur, rede->nos_grafo[i].cor);
+		for (p = 0; p < rede->nos_grafo[i].tam_vetor_vizinhos; p++)
+		{
+			printf("# %i ", rede->nos_grafo[i].nos_vizinhos[p]);
+		}
+		printf("\n");
+	}	
 }
