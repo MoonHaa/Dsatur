@@ -98,6 +98,7 @@ int indice_proximo_colorir(grafo* rede)
 			if( (rede->nos_grafo[i].cor == 0) && (rede->nos_grafo[i].num_vizinhos > maior_n_vizinhos) )
 			{
 				indice_escolhido = i;
+				maior_n_vizinhos = rede->nos_grafo[i].num_vizinhos;
 			}
 		}
 	}
