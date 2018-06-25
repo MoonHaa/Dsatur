@@ -102,3 +102,42 @@ grafo * abre_csv(char * arquivo)
 	//retorna o grafo criado
 	return grafico;
 }
+
+void grava_csv(char * arquivo, grafo * rede)
+{
+	int tamanho_string = strlen(arquivo);
+	char *string = (char*)malloc( (tamanho_string + 4) * sizeof(char));
+
+	int i;
+
+	for (i = 0; i < (tamanho_string - 4); i++)
+	{
+		string[i] = arquivo[i];
+	}
+
+	string[tamanho_string - 4 + 0] = '_';
+	string[tamanho_string - 4 + 1] = 'o';
+	string[tamanho_string - 4 + 2] = 'u';
+	string[tamanho_string - 4 + 3] = 't';
+	string[tamanho_string - 4 + 4] = '.';
+	string[tamanho_string - 4 + 5] = 'c';
+	string[tamanho_string - 4 + 6] = 's';
+	string[tamanho_string - 4 + 7] = 'v';
+	string[tamanho_string - 4 + 8] = '\0';
+
+	FILE* file = fopen(string, "w");
+
+	if (file == NULL)
+	{
+		return; //erro!!! nao foi possivel abrir o arquivo!!!
+	}
+
+	for (i = 0; i < rede->tamanho_grafo; i++)
+	{
+		fprintf(file, "%i, %i\n", rede->nos_grafo[i].valor_no, rede->nos_grafo[i].cor);
+	}
+
+	fclose(file);
+
+	free(string);
+}

@@ -22,6 +22,8 @@ int main(int argc, char* argv[])
 	dsatur(rede);
 	clock_t end = clock();
 
+	grava_csv(argv[1], rede);
+
 	int num_nos = rede->tamanho_grafo;
 	int num_arestas = conta_arestas(rede);
 	int grau_minimo = retorna_menor_grau_finalizado(rede);

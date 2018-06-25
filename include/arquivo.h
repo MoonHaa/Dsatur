@@ -12,4 +12,7 @@
 //le o arquivo e cria o grafo!!!
 grafo* abre_csv(char* arquivo);
 
+//grava as cores no arquivo csv
+void grava_csv(char* arquivo, grafo* rede);
+
 #endif // !ARQUIVO_H_
